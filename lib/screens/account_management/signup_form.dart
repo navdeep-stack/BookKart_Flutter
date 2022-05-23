@@ -1,3 +1,4 @@
+import 'package:bookkart_flutter/screens/user/user_home_screen.dart';
 import 'package:bookkart_flutter/widgets/common/custom_appbar.dart';
 import 'package:bookkart_flutter/widgets/common/custom_button.dart';
 import 'package:bookkart_flutter/widgets/common/custom_text_field.dart';
@@ -42,7 +43,7 @@ class SignUpForm extends StatelessWidget {
               CustomButton(
                   title: "Sign Up",
                   onPressed: () {
-                    Get.to(() => (""));
+                    Get.to(() => UserHomeScreen());
                   }),
               const SizedBox(
                 height: 20,
