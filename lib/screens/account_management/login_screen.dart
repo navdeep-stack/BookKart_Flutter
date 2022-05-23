@@ -1,4 +1,5 @@
 import 'package:bookkart_flutter/screens/account_management/signup_screen.dart';
+import 'package:bookkart_flutter/screens/admin/admin_home_screen.dart';
 import 'package:bookkart_flutter/widgets/common/custom_appbar.dart';
 import 'package:bookkart_flutter/widgets/common/custom_button.dart';
 import 'package:bookkart_flutter/widgets/common/custom_text_field.dart';
@@ -39,7 +40,7 @@ class LoginScreen extends StatelessWidget {
             CustomButton(
                 title: "Login",
                 onPressed: () {
-                  Get.to(() => (""));
+                  Get.to(() => const AdminHomeScreen());
                 }),
             const SizedBox(
               height: 20,
