@@ -17,8 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 500), () {
-      Get.offAll(() => const LoginScreen());
+    String id = SharedData.readLogInId();
+    Timer(const Duration(milliseconds: 2000), () {
+      Get.offAll(() => id == "admin"
+          ? const AdminHomeScreen()
+          : id == ""
+          ? LoginScreen()
+          : UserHomeScreen());
     });
   }
 
