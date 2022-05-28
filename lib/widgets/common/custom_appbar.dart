@@ -1,7 +1,7 @@
-import 'package:bookkart_flutter/screens/account_management/login_screen.dart';
-import 'package:bookkart_flutter/screens/account_management/signup_form.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:book/screens/account_management/login_screen.dart';
+import 'package:book/screens/account_management/signup_form.dart';
 
 class CustomAppBar {
   static appBar({
@@ -14,7 +14,7 @@ class CustomAppBar {
       leading: showAddButton
           ? IconButton(
               onPressed: () {
-                Get.to(() => const SignUpForm());
+                Get.to(() => SignUpForm());
               },
               icon: const Icon(Icons.add_circle, color: Colors.blue),
             )
@@ -31,7 +31,7 @@ class CustomAppBar {
         showLogout
             ? InkWell(
                 onTap: () {
-                  Get.offAll(const LoginScreen());
+                  Get.offAll(LoginScreen());
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),

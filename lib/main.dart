@@ -1,5 +1,4 @@
-
-import 'package:bookkart_flutter/screens/splash_screen.dart';
+import 'package:book/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
