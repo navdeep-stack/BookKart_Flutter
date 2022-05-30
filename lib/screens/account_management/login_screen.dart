@@ -2,14 +2,14 @@ import 'package:book/data/shared_data.dart';
 import 'package:book/models/user_provider.dart';
 import 'package:book/screens/account_management/signup_screen.dart';
 import 'package:book/screens/splash_screen.dart';
+import 'package:book/widgets/_common/text_error.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:book/widgets/common/custom_appbar.dart';
-import 'package:book/widgets/common/custom_button.dart';
-import 'package:book/widgets/common/custom_text_field.dart';
-import 'package:book/widgets/common/text_error.dart';
+import 'package:book/widgets/_common/custom_appbar.dart';
+import 'package:book/widgets/_common/custom_button.dart';
+import 'package:book/widgets/_common/custom_text_field.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);

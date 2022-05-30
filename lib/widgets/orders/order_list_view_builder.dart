@@ -29,17 +29,17 @@ class OrderListViewBuilder extends StatelessWidget {
 
     return tempOrders.isEmpty
         ? const Center(
-            child: Text("No Orders"),
-          )
+      child: Text("No Orders"),
+    )
         : ListView.builder(
-            itemCount: tempOrders.length,
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return OrderListTile(
-                orderModel: tempOrders[index],
-                isAdmin: isAdmin,
-              );
-            },
-          );
+      itemCount: tempOrders.length,
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) {
+        return OrderListTile(
+          orderModel: tempOrders[index],
+          isAdmin: isAdmin,
+        );
+      },
+    );
   }
 }

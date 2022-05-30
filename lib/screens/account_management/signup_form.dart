@@ -1,4 +1,5 @@
 import 'package:book/models/user_provider.dart';
+import 'package:book/widgets/_common/text_error.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:book/data/shared_data.dart';
 import 'package:book/models/user_model.dart';
 import 'package:book/screens/splash_screen.dart';
-import 'package:book/widgets/common/custom_appbar.dart';
-import 'package:book/widgets/common/custom_button.dart';
-import 'package:book/widgets/common/custom_text_field.dart';
-import 'package:book/widgets/common/text_error.dart';
+import 'package:book/widgets/_common/custom_appbar.dart';
+import 'package:book/widgets/_common/custom_button.dart';
+import 'package:book/widgets/_common/custom_text_field.dart';
 
 class SignUpForm extends StatelessWidget {
   final GoogleSignInAccount? googleAccount;

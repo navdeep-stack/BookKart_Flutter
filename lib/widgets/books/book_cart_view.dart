@@ -1,10 +1,12 @@
+import 'package:book/models/book_model.dart';
+import 'package:book/models/cart_model.dart';
+import 'package:book/widgets/_common/custom_button.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
-import '../common/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class BookCartView extends StatelessWidget {
-  const BookCartView({Key? key}) : super(key: key);
+  final BookModel book;
+  const BookCartView({Key? key, required this.book}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,8 @@ class BookCartView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            "https://uploads-ssl.webflow.com/5f64a4eb5a48d21969aa774a/60ad9c51cec4bde78070db36_the_psychology_of_money.jpeg",
+            book.imageURL ??
+                "https://uploads-ssl.webflow.com/5f64a4eb5a48d21969aa774a/60ad9c51cec4bde78070db36_the_psychology_of_money.jpeg",
             height: 100,
           ),
           const SizedBox(
@@ -37,20 +40,20 @@ class BookCartView extends StatelessWidget {
                   height: 10,
                 ),
                 Row(
-                  children: const [
+                  children: [
                     Flexible(
                       child: Text(
-                        "The Psychology of Money",
-                        style: TextStyle(
+                        book.bookName ?? "The Psychology of Money",
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                         textScaleFactor: 1,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     Text(
-                      "\$14",
-                      style: TextStyle(
+                      "\$${book.price!.toStringAsFixed(2)}",
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                       ),
                       textScaleFactor: 1.2,
@@ -60,9 +63,9 @@ class BookCartView extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "8 September 2020",
-                  style: TextStyle(
+                Text(
+                  book.categoryName!,
+                  style: const TextStyle(
                     color: Colors.grey,
                   ),
                   textScaleFactor: 1.2,
@@ -70,7 +73,7 @@ class BookCartView extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                _buildRemoveAddedButton(),
+                _buildRemoveAddedButton(context),
               ],
             ),
           ),
@@ -79,24 +82,21 @@ class BookCartView extends StatelessWidget {
     );
   }
 
-  _buildRemoveAddedButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CustomButton(
-          title: "REMOVE",
-          onPressed: () {},
-          color: Colors.red,
-        ),
-        const SizedBox(
-          width: 10,
-        ),
-        CustomButton(
-            title: "ADDED",
-            onPressed: () {},
-            color: Theme.of(Get.context!).primaryColor),
-      ],
-    );
+  _buildRemoveAddedButton(context) {
+    return Consumer<CartNotifier>(builder: (context, cart, child) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          CustomButton(
+            title: "REMOVE",
+            onPressed: () {
+              cart.remove(book);
+            },
+            color: Colors.red,
+          ),
+        ],
+      );
+    });
   }
 }

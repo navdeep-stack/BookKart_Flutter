@@ -1,7 +1,5 @@
+import 'package:book/widgets/categories/category_grid_view.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/books/search_field.dart';
-import '../../widgets/categories/category_grid_view.dart';
 
 class CategoryListPage extends StatelessWidget {
   const CategoryListPage({Key? key}) : super(key: key);
@@ -14,8 +12,6 @@ class CategoryListPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: const [
-          SearchField(),
-          SizedBox(height: 20),
           Text(
             "Library",
             textScaleFactor: 1.2,

@@ -1,6 +1,6 @@
 import 'package:book/widgets/books/book_list_view_builder.dart';
-import 'package:book/widgets/common/custom_appbar.dart';
-import 'package:book/widgets/common/custom_button.dart';
+import 'package:book/widgets/_common/custom_appbar.dart';
+import 'package:book/widgets/_common/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'admin_orders_screen.dart';
