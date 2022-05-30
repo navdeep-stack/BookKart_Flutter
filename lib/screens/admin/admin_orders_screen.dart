@@ -1,7 +1,7 @@
 import 'package:book/widgets/orders/order_list_view_builder.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/common/custom_appbar.dart';
+import '../../widgets/_common/custom_appbar.dart';
 
 class AdminOrders extends StatelessWidget {
   const AdminOrders({

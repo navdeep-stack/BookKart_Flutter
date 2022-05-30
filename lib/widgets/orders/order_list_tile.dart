@@ -24,28 +24,28 @@ class OrderListTile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ...orderModel.books!.map(
-              (e) => Padding(
+                  (e) => Padding(
                 padding: const EdgeInsets.only(top: 8.0, bottom: 8),
                 child: Text("1 X " + e.keys.first + "\$${e.values.first}"),
               ),
             ),
             !isAdmin
                 ? Text("Order Delivery Date :- " +
-                    DateTime.now()
-                        .add(Duration(days: Random().nextInt(10)))
-                        .toString()
-                        .substring(0, 19))
+                DateTime.now()
+                    .add(Duration(days: Random().nextInt(10)))
+                    .toString()
+                    .substring(0, 19))
                 : Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("Customer Details"),
-                      const SizedBox(height: 10),
-                      Text("Name: " + orderModel.customerName!),
-                      Text("Address: " + orderModel.customerAddress!),
-                      Text("Number: " + orderModel.customerNumber!),
-                    ],
-                  )
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text("Customer Details"),
+                const SizedBox(height: 10),
+                Text("Name: " + orderModel.customerName!),
+                Text("Address: " + orderModel.customerAddress!),
+                Text("Number: " + orderModel.customerNumber!),
+              ],
+            )
           ],
         ),
         trailing: Text("\$ ${orderModel.orderAmount!.toStringAsFixed(2)}"),
