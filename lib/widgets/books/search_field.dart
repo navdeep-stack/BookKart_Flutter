@@ -2,7 +2,13 @@ import 'package:flutter/material.dart';
 
 class SearchField extends StatelessWidget {
   final String hint;
-  const SearchField({Key? key, this.hint = "Search Items..."})
+  final Function(String?)? onChanged;
+  final TextEditingController? controller;
+  const SearchField(
+      {Key? key,
+        this.hint = "Search Items...",
+        this.controller,
+        this.onChanged})
       : super(key: key);
 
   @override
@@ -18,6 +24,8 @@ class SearchField extends StatelessWidget {
       ),
       child: Center(
         child: TextField(
+          controller: controller,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: hint,
             border: InputBorder.none,

@@ -1,12 +1,22 @@
+import 'package:book/models/book_model.dart';
+import 'package:book/models/cart_model.dart';
+import 'package:book/models/user_model.dart';
+import 'package:book/models/user_provider.dart';
+import 'package:book/screens/admin/book_form.dart';
+import 'package:book/widgets/_common/custom_button.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import '../../screens/admin/book_form.dart';
-import '../_common/custom_button.dart';
+import 'package:provider/provider.dart';
 
 class BookListTile extends StatelessWidget {
+  final BookModel book;
   final bool isAdmin;
-  const BookListTile({Key? key, this.isAdmin = false}) : super(key: key);
+  const BookListTile({
+    Key? key,
+    this.isAdmin = false,
+    required this.book,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +34,10 @@ class BookListTile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Image.network(
-            "https://uploads-ssl.webflow.com/5f64a4eb5a48d21969aa774a/60ad9c51cec4bde78070db36_the_psychology_of_money.jpeg",
+            book.imageURL ??
+                "https://uploads-ssl.webflow.com/5f64a4eb5a48d21969aa774a/60ad9c51cec4bde78070db36_the_psychology_of_money.jpeg",
             height: 150,
+            width: 100,
           ),
           const SizedBox(
             width: 10,
@@ -40,10 +52,10 @@ class BookListTile extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    const Flexible(
+                    Flexible(
                       child: Text(
-                        "The Psychology of Money",
-                        style: TextStyle(
+                        book.bookName!,
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                         ),
                         textScaleFactor: 1.2,
@@ -51,38 +63,53 @@ class BookListTile extends StatelessWidget {
                     ),
                     isAdmin
                         ? const SizedBox()
-                        : const Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.favorite_outline,
-                              color: Colors.grey,
+                        : Consumer<UserProvider>(
+                        builder: (context, user, child) {
+                          return InkWell(
+                            onTap: () {
+                              user.addOrRemoveAFavouriteBook(
+                                  bookID: book.id!);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: ((user.user!.favouriteBooks ?? [])
+                                  .contains(book.id))
+                                  ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                                  : const Icon(
+                                Icons.favorite_outline,
+                                color: Colors.grey,
+                              ),
                             ),
-                          ),
+                          );
+                        }),
                   ],
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "8 September 2020",
-                  style: TextStyle(
+                Text(
+                  book.categoryName!,
+                  style: const TextStyle(
                     color: Colors.grey,
                   ),
                   textScaleFactor: 1.2,
                 ),
                 !isAdmin
                     ? const SizedBox(
-                        height: 10,
-                      )
+                  height: 10,
+                )
                     : const SizedBox(),
                 !isAdmin
-                    ? const Text(
-                        "\$14",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        textScaleFactor: 1.2,
-                      )
+                    ? Text(
+                  "\$${book.price!.toStringAsFixed(2)}",
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textScaleFactor: 1.2,
+                )
                     : const SizedBox(),
                 SizedBox(
                   height: isAdmin ? 50 : 10,
@@ -103,7 +130,12 @@ class BookListTile extends StatelessWidget {
       children: [
         CustomButton(
           title: "Delete",
-          onPressed: () {},
+          onPressed: () {
+            FirebaseFirestore.instance
+                .collection("books")
+                .doc(book.id)
+                .delete();
+          },
           color: Colors.red,
         ),
         const SizedBox(
@@ -113,8 +145,8 @@ class BookListTile extends StatelessWidget {
             title: "Edit",
             onPressed: () {
               Get.to(
-                () => const BookForm(
-                  // edit: true,
+                    () => BookForm(
+                  book: book,
                 ),
               );
             },
@@ -124,16 +156,25 @@ class BookListTile extends StatelessWidget {
   }
 
   _buildAddToCartButton() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        CustomButton(
-          title: "Add",
-          onPressed: () {},
-          color: Theme.of(Get.context!).primaryColor,
-        ),
-      ],
-    );
+    return Consumer<CartNotifier?>(builder: (context, value, child) {
+      final _cart = Provider.of<CartNotifier?>(context);
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          _cart?.isInCart(book) ?? false
+              ? CustomButton(
+            title: "Remove",
+            onPressed: () => _cart!.remove(book),
+            color: Colors.red,
+          )
+              : CustomButton(
+            title: "Add",
+            onPressed: () => _cart!.add(book),
+            color: Theme.of(Get.context!).primaryColor,
+          ),
+        ],
+      );
+    });
   }
 }

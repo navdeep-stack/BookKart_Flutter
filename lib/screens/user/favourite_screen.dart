@@ -1,11 +1,11 @@
-
+import 'package:book/widgets/_common/custom_appbar.dart';
+import 'package:book/widgets/books/book_list_view_builder.dart';
+import 'package:book/widgets/books/search_field.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/books/book_list_view_builder.dart';
-import '../../widgets/books/search_field.dart';
-
 class FavouriteScreen extends StatelessWidget {
-  const FavouriteScreen({Key? key}) : super(key: key);
+  FavouriteScreen({Key? key}) : super(key: key);
+  final ValueNotifier _search = ValueNotifier("");
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +15,23 @@ class FavouriteScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: const [
-            SearchField(),
-            SizedBox(height: 20),
+          children: [
+            SearchField(
+              onChanged: (String? t) {
+                _search.value = t;
+              },
+            ),
+            const SizedBox(height: 20),
             Expanded(
-              child: BookListViewBuilder(),
+              child: ValueListenableBuilder(
+                valueListenable: _search,
+                builder: (BuildContext context, dynamic search, Widget? child) {
+                  return BookListViewBuilder(
+                    search: search ?? "",
+                    onlyFavourites: true,
+                  );
+                },
+              ),
             ),
           ],
         ),
