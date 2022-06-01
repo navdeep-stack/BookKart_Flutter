@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'package:book/data/shared_data.dart';
+import 'package:book/screens/account_management/login_screen.dart';
+import 'package:book/screens/admin/admin_home_screen.dart';
+import 'package:book/screens/user/user_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'account_management/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -14,8 +17,13 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 500), () {
-      Get.offAll(() => const LoginScreen());
+    String id = SharedData.readLogInId();
+    Timer(const Duration(milliseconds: 2000), () {
+      Get.offAll(() => id == "admin"
+          ? const AdminHomeScreen()
+          : id == ""
+          ? LoginScreen()
+          : UserHomeScreen());
     });
   }
 
